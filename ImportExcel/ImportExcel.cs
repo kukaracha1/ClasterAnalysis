@@ -208,8 +208,57 @@ namespace AccidentForecast
             }
         }
         //ДТП
-        public static void LoadExcelAccident(string listName, string pathName);
+        public static void LoadExcelAccident(string listName, string pathName)
+        {
+            DataTable dtexcel = new DataTable();
 
+            string constr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0 Xml;HDR=YES;'",pathName);
+            using (OleDbConnection conn = new OleDbConnection(constr))
+            {
+                conn.Open();
+
+                OleDbDataAdapter daexcel = new OleDbDataAdapter(String.Format("Select * from [{0}$]",listName), conn);
+                dtexcel.Locale = CultureInfo.CurrentCulture;
+                daexcel.Fill(dtexcel);
+                conn.Close();
+            }
+            dtexcel.Rows.RemoveAt(0);
+            dtexcel.Rows.RemoveAt(0);
+            string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TestDBAccidents;Data Source=DESKTOP-PPEQF8T";
+            string sql = "insert into Accident values (@A, @B, @C, @D)";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                DateTime chekdate = DateTime.Now;
+                int itemInd = 0;
+                foreach (DataRow row in dtexcel.Rows)
+                {
+                    if (row[1].ToString() == "")
+                        break;
+                    SqlCommand cmd = conn.CreateCommand();
+
+                    cmd.CommandText = sql;
+                    if (row[0].ToString() == "")
+                        row[0] = chekdate;
+                    else
+                        chekdate = Convert.ToDateTime(row[0]);
+                    cmd.Parameters.AddWithValue("@A", row[0]);
+                    cmd.Parameters.AddWithValue("@B", row[2]);
+                    cmd.Parameters.AddWithValue("@C", row[3]);
+                    foreach (Area item in Enum.GetValues(typeof(Area)))
+                    {
+
+                        if (row[1].ToString().IndexOf(item.Description()) > -1) // СДЕЛАТЬ В ОСТАЛЬНЫХ ТАКЖЕ
+                            itemInd = Convert.ToInt32(item);
+                    }
+                    cmd.Parameters.AddWithValue("@D", itemInd);
+                    cmd.ExecuteNonQuery();
+                    //  break;
+                }
+                conn.Close();
+            }
+        }
        //Пожары
         public static void LoadExcelFires(string listName, string pathName);
 
