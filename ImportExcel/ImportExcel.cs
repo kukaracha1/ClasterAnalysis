@@ -260,7 +260,133 @@ namespace AccidentForecast
             }
         }
        //Пожары
-        public static void LoadExcelFires(string listName, string pathName);
+        public static void LoadExcelFires(string listName, string pathName)
+        {
+            DataTable dtexcel = new DataTable();
 
+            string constr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0 Xml;HDR=YES;'",pathName);
+            using (OleDbConnection conn = new OleDbConnection(constr))
+            {
+                conn.Open();
+
+                OleDbDataAdapter daexcel = new OleDbDataAdapter(String.Format("Select * from [{0}$]",listName), conn);
+                dtexcel.Locale = CultureInfo.CurrentCulture;
+                daexcel.Fill(dtexcel);
+                conn.Close();
+            }
+            dtexcel.Rows.RemoveAt(0);
+            //      dtexcel.Rows.RemoveAt(0);
+            string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TestDBAccidents;Data Source=DESKTOP-PPEQF8T";
+            string sqlFires = "insert into Fires values (@A, @B, @C, @D, @M); SELECT @ID=SCOPE_IDENTITY()";
+            string sqlObject = "insert into ObjectFires values (1,@E,@F)";
+            string sqlGetFiresIdent = "select @@IDENTITY";
+
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                DateTime chekdate = DateTime.Now;
+
+                foreach (DataRow row in dtexcel.Rows)
+                {
+                    int itemInd = -1;
+                    if (row[1].ToString() == "")
+                        break;
+
+
+
+                    SqlCommand cmd = conn.CreateCommand();
+
+                    cmd.CommandText = sqlFires;
+                    SqlParameter output = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                    output.Direction = ParameterDirection.Output;
+                    if (row[0].ToString() == "")
+                    {
+                        //  chekdate = new DateTime(1899, 12, 30).AddDays(Convert.ToDouble(row[0]));
+                        row[0] = chekdate.ToString();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            if (!(row[0] is DateTime))
+                                chekdate = new DateTime(1899, 12, 30).AddDays(Convert.ToDouble(row[0]));
+                            else
+                                chekdate = Convert.ToDateTime(row[0]);
+                        }
+                        catch
+                        {
+                            chekdate = Convert.ToDateTime(row[0]);
+                        }
+                        row[0] = chekdate.ToString();
+                        //  chekdate = Convert.ToDateTime(row[0]);
+                    }
+                    cmd.Parameters.AddWithValue("@A", Convert.ToDateTime(row[0]));
+                    cmd.Parameters.AddWithValue("@B", row[3]);
+                    cmd.Parameters.AddWithValue("@M", row[4]);
+                    cmd.Parameters.AddWithValue("@C", row[5]);
+                    foreach (Area item in Enum.GetValues(typeof(Area)))
+                    {
+
+                        if (row[1].ToString().IndexOf(item.Description()) > -1 && Convert.ToInt32(item) != 0) // СДЕЛАТЬ В ОСТАЛЬНЫХ ТАКЖЕ
+                            itemInd = Convert.ToInt32(item);
+                    }
+                    if (itemInd == -1)
+                    {
+                        if (row[1].ToString().IndexOf("Липецк") > -1)
+                            itemInd = 20;
+                        else if (row[1].ToString().IndexOf("Елец") > -1)
+                            itemInd = 19;
+                        /*  else if (row[1].ToString().IndexOf("Грязи") > -1)
+                              itemInd = 2;
+                          else if (row[1].ToString().IndexOf("Данков") > -1)
+                              itemInd = 3;
+                          else if (row[1].ToString().IndexOf("Задонск") > -1)
+                              itemInd = 8;
+                          else if (row[1].ToString().IndexOf("Чаплыгин") > -1)
+                              itemInd = 18;
+                          else if (row[1].ToString().IndexOf("Тербуны") > -1)
+                              itemInd = 15;
+                          else if (row[1].ToString().IndexOf("Лев") > -1)
+                              itemInd = 12;
+                          else if (row[1].ToString().IndexOf("Добринка") > -1)
+                              itemInd = 4;
+                          else if (row[1].ToString().IndexOf("Усмань") > -1)
+                              itemInd = 16;
+                          else if (row[1].ToString().IndexOf("Лебедянь") > -1)
+                              itemInd = 11;
+                          else if (row[1].ToString().IndexOf("Становое") > -1)
+                              itemInd = 14;
+                          else if (row[1].ToString().IndexOf("Волово") > -1)
+                              itemInd = 1;
+                          else if (row[1].ToString().IndexOf("Красное") > -1)
+                              itemInd = 10;
+                          else if (row[1].ToString().IndexOf("Хлевное") > -1)
+                              itemInd = 17;*/
+                    }
+                    if (itemInd == -1)
+                        itemInd = 0;
+
+                    cmd.Parameters.AddWithValue("@D", itemInd);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = sqlObject;
+
+                    cmd.Parameters.AddWithValue("@E", output.Value);
+                    cmd.Parameters.AddWithValue("@F", row[2]);
+
+                    cmd.ExecuteNonQuery();
+
+                    /*DataTable dtIndent = new DataTable();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlGetFiresIdent, connectionString);
+                    sqlDataAdapter.Fill(dtIndent);*/
+                    //int a = Convert.ToInt32(output.Value);
+
+
+
+                }
+                conn.Close();
+            }
+        }
     }
 }
