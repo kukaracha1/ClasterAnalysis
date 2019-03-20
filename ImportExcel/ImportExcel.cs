@@ -114,8 +114,99 @@ namespace AccidentForecast
         }
 
        //ЖКХ
-        public static void LoadExcelHaCS(string listName, string pathName);
+        public static void LoadExcelHaCS(string listName, string pathName)
+        {
+            DataTable dtexcel = new DataTable();
 
+            string constr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0 Xml;HDR=YES; IMEX=1'",pathName);
+
+            using (OleDbConnection conn = new OleDbConnection(constr))
+            {
+                conn.Open();
+
+                OleDbDataAdapter daexcel = new OleDbDataAdapter(String.Format("Select * from [{0}$]",listName), conn);
+                dtexcel.Locale = CultureInfo.CurrentCulture;
+                daexcel.Fill(dtexcel);
+                conn.Close();
+            }
+
+            dtexcel.Rows.RemoveAt(0);
+            dtexcel.Rows.RemoveAt(0);
+
+
+
+            //      dtexcel.Rows.RemoveAt(0);
+            string connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TestDBAccidents;Data Source=DESKTOP-PPEQF8T";
+            string sqlPower = "insert into PowerSupply values (@A, @B, @C)";
+            string sqlWater = "insert into WaterSupply values (@D, @E, @F)";
+            string sqlHeat = "insert into HeatSupply values (@G, @H, @I)";
+            int i = 0;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                DateTime chekdate = DateTime.Now;
+                int itemInd = 0;
+                foreach (DataRow row in dtexcel.Rows)
+                {
+                    if (row[1].ToString() == "")
+                        break;
+                    SqlCommand cmd = conn.CreateCommand();
+
+                    cmd.CommandText = sqlPower;
+                    if (row[0].ToString() == "")
+                        row[0] = chekdate;
+                    else
+                        chekdate = Convert.ToDateTime(row[0]);
+                    cmd.Parameters.AddWithValue("@A", row[0]);
+                    cmd.Parameters.AddWithValue("@B", Convert.ToInt32(row[1]));
+                    foreach (Area item in Enum.GetValues(typeof(Area)))
+                    {
+
+                        if (row[2].ToString().IndexOf(item.Description()) > -1) // СДЕЛАТЬ В ОСТАЛЬНЫХ ТАКЖЕ
+                            itemInd = Convert.ToInt32(item);
+                    }
+                    cmd.Parameters.AddWithValue("@C", itemInd);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = sqlHeat;
+                    if (row[0].ToString() == "")
+                        row[0] = chekdate;
+                    else
+                        chekdate = Convert.ToDateTime(row[0]);
+                    cmd.Parameters.AddWithValue("@G", row[0]);
+                    cmd.Parameters.AddWithValue("@H", Convert.ToInt32(row[3]));
+                    foreach (Area item in Enum.GetValues(typeof(Area)))
+                    {
+
+                        if (row[4].ToString().IndexOf(item.Description()) > -1) // СДЕЛАТЬ В ОСТАЛЬНЫХ ТАКЖЕ
+                            itemInd = Convert.ToInt32(item);
+                    }
+                    cmd.Parameters.AddWithValue("@I", itemInd);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = sqlWater;
+                    if (row[0].ToString() == "")
+                        row[0] = chekdate;
+                    else
+                        chekdate = Convert.ToDateTime(row[0]);
+                    cmd.Parameters.AddWithValue("@D", row[0]);
+                    cmd.Parameters.AddWithValue("@E", Convert.ToInt32(row[5]));
+                    foreach (Area item in Enum.GetValues(typeof(Area)))
+                    {
+                        if (row[6].ToString().IndexOf(item.Description()) > -1) // СДЕЛАТЬ В ОСТАЛЬНЫХ ТАКЖЕ
+                            itemInd = Convert.ToInt32(item);
+                    }
+                    cmd.Parameters.AddWithValue("@F", itemInd);
+                    cmd.ExecuteNonQuery();
+
+                    /*      ++i;
+                          if(i>=5)
+                       break;*/
+
+                }
+                conn.Close();
+            }
+        }
         //ДТП
         public static void LoadExcelAccident(string listName, string pathName);
 
