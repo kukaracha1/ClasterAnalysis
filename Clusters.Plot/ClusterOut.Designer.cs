@@ -39,12 +39,8 @@
             this.factorX = new System.Windows.Forms.ComboBox();
             this.factorY = new System.Windows.Forms.ComboBox();
             this.getListProvince = new System.Windows.Forms.Button();
-            this.paintDendrogram = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.paintCrab = new System.Windows.Forms.Button();
             this.infoOutPut = new System.Windows.Forms.TextBox();
-            this.countCrab = new System.Windows.Forms.TextBox();
-            this.selectCountCrab = new System.Windows.Forms.Button();
             this.paintForel = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.NumGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,20 +132,6 @@
             this.getListProvince.UseVisualStyleBackColor = true;
             this.getListProvince.Click += new System.EventHandler(this.getListProvince_Click);
             // 
-            // paintDendrogram
-            // 
-            this.paintDendrogram.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-            this.paintDendrogram.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.paintDendrogram.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
-            this.paintDendrogram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paintDendrogram.Location = new System.Drawing.Point(335, 37);
-            this.paintDendrogram.Name = "paintDendrogram";
-            this.paintDendrogram.Size = new System.Drawing.Size(133, 23);
-            this.paintDendrogram.TabIndex = 8;
-            this.paintDendrogram.Text = "Дендрограмма";
-            this.paintDendrogram.UseVisualStyleBackColor = true;
-            this.paintDendrogram.Click += new System.EventHandler(this.paintDendrogram_Click);
-            // 
             // chart1
             // 
             chartArea2.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
@@ -190,20 +172,6 @@
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
-            // paintCrab
-            // 
-            this.paintCrab.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-            this.paintCrab.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.paintCrab.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
-            this.paintCrab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paintCrab.Location = new System.Drawing.Point(503, 38);
-            this.paintCrab.Name = "paintCrab";
-            this.paintCrab.Size = new System.Drawing.Size(75, 23);
-            this.paintCrab.TabIndex = 9;
-            this.paintCrab.Text = "Краб";
-            this.paintCrab.UseVisualStyleBackColor = true;
-            this.paintCrab.Click += new System.EventHandler(this.paintCrab_Click);
-            // 
             // infoOutPut
             // 
             this.infoOutPut.Location = new System.Drawing.Point(781, 7);
@@ -213,29 +181,6 @@
             this.infoOutPut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.infoOutPut.Size = new System.Drawing.Size(404, 177);
             this.infoOutPut.TabIndex = 10;
-            // 
-            // countCrab
-            // 
-            this.countCrab.AcceptsReturn = true;
-            this.countCrab.Location = new System.Drawing.Point(597, 40);
-            this.countCrab.Name = "countCrab";
-            this.countCrab.Size = new System.Drawing.Size(39, 20);
-            this.countCrab.TabIndex = 12;
-            this.countCrab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.countCrab_KeyPress);
-            // 
-            // selectCountCrab
-            // 
-            this.selectCountCrab.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-            this.selectCountCrab.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.selectCountCrab.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
-            this.selectCountCrab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectCountCrab.Location = new System.Drawing.Point(639, 38);
-            this.selectCountCrab.Name = "selectCountCrab";
-            this.selectCountCrab.Size = new System.Drawing.Size(33, 23);
-            this.selectCountCrab.TabIndex = 13;
-            this.selectCountCrab.Text = "OK";
-            this.selectCountCrab.UseVisualStyleBackColor = true;
-            this.selectCountCrab.Click += new System.EventHandler(this.selectCountCrab_Click);
             // 
             // paintForel
             // 
@@ -457,11 +402,7 @@
             this.Controls.Add(this.numberForel);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.paintForel);
-            this.Controls.Add(this.selectCountCrab);
-            this.Controls.Add(this.countCrab);
             this.Controls.Add(this.infoOutPut);
-            this.Controls.Add(this.paintCrab);
-            this.Controls.Add(this.paintDendrogram);
             this.Controls.Add(this.getListProvince);
             this.Controls.Add(this.factorY);
             this.Controls.Add(this.factorX);
@@ -486,12 +427,8 @@
         private System.Windows.Forms.ComboBox factorX;
         private System.Windows.Forms.ComboBox factorY;
         private System.Windows.Forms.Button getListProvince;
-        private System.Windows.Forms.Button paintDendrogram;
-        private System.Windows.Forms.Button paintCrab;
         private System.Windows.Forms.TextBox infoOutPut;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.TextBox countCrab;
-        private System.Windows.Forms.Button selectCountCrab;
         private System.Windows.Forms.Button paintForel;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox numberForel;
