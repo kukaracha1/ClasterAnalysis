@@ -39,22 +39,16 @@
             this.factorX = new System.Windows.Forms.ComboBox();
             this.factorY = new System.Windows.Forms.ComboBox();
             this.getListProvince = new System.Windows.Forms.Button();
-            this.paintDendrogram = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.paintCrab = new System.Windows.Forms.Button();
             this.infoOutPut = new System.Windows.Forms.TextBox();
             this.countCrab = new System.Windows.Forms.TextBox();
             this.selectCountCrab = new System.Windows.Forms.Button();
-            this.paintForel = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.NumGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameRows = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Faq1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Faq2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numberForel = new System.Windows.Forms.TextBox();
-            this.radiusForel = new System.Windows.Forms.TextBox();
-            this.Radius_label = new System.Windows.Forms.Label();
-            this.NumberP_label = new System.Windows.Forms.Label();
             this.showPoints = new System.Windows.Forms.Button();
             this.Xmax = new System.Windows.Forms.TextBox();
             this.Ymax = new System.Windows.Forms.TextBox();
@@ -135,20 +129,6 @@
             this.getListProvince.Text = "Список";
             this.getListProvince.UseVisualStyleBackColor = true;
             this.getListProvince.Click += new System.EventHandler(this.getListProvince_Click);
-            // 
-            // paintDendrogram
-            // 
-            this.paintDendrogram.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-            this.paintDendrogram.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.paintDendrogram.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
-            this.paintDendrogram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paintDendrogram.Location = new System.Drawing.Point(335, 37);
-            this.paintDendrogram.Name = "paintDendrogram";
-            this.paintDendrogram.Size = new System.Drawing.Size(133, 23);
-            this.paintDendrogram.TabIndex = 8;
-            this.paintDendrogram.Text = "Дендрограмма";
-            this.paintDendrogram.UseVisualStyleBackColor = true;
-            this.paintDendrogram.Click += new System.EventHandler(this.paintDendrogram_Click);
             // 
             // chart1
             // 
@@ -237,20 +217,6 @@
             this.selectCountCrab.UseVisualStyleBackColor = true;
             this.selectCountCrab.Click += new System.EventHandler(this.selectCountCrab_Click);
             // 
-            // paintForel
-            // 
-            this.paintForel.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-            this.paintForel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.paintForel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
-            this.paintForel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paintForel.Location = new System.Drawing.Point(164, 38);
-            this.paintForel.Name = "paintForel";
-            this.paintForel.Size = new System.Drawing.Size(121, 23);
-            this.paintForel.TabIndex = 14;
-            this.paintForel.Text = "Форель";
-            this.paintForel.UseVisualStyleBackColor = true;
-            this.paintForel.Click += new System.EventHandler(this.paintForel_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -306,42 +272,6 @@
             this.Faq2.Name = "Faq2";
             this.Faq2.ReadOnly = true;
             this.Faq2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // numberForel
-            // 
-            this.numberForel.Location = new System.Drawing.Point(103, 40);
-            this.numberForel.Name = "numberForel";
-            this.numberForel.Size = new System.Drawing.Size(50, 20);
-            this.numberForel.TabIndex = 16;
-            this.numberForel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numberForel_KeyPress);
-            this.numberForel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numberForel_KeyUp);
-            // 
-            // radiusForel
-            // 
-            this.radiusForel.Location = new System.Drawing.Point(30, 40);
-            this.radiusForel.Name = "radiusForel";
-            this.radiusForel.Size = new System.Drawing.Size(38, 20);
-            this.radiusForel.TabIndex = 17;
-            this.radiusForel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.radiusForel_KeyPress);
-            this.radiusForel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.radiusForel_KeyUp);
-            // 
-            // Radius_label
-            // 
-            this.Radius_label.AutoSize = true;
-            this.Radius_label.Location = new System.Drawing.Point(6, 43);
-            this.Radius_label.Name = "Radius_label";
-            this.Radius_label.Size = new System.Drawing.Size(21, 13);
-            this.Radius_label.TabIndex = 18;
-            this.Radius_label.Text = "R=";
-            // 
-            // NumberP_label
-            // 
-            this.NumberP_label.AutoSize = true;
-            this.NumberP_label.Location = new System.Drawing.Point(76, 43);
-            this.NumberP_label.Name = "NumberP_label";
-            this.NumberP_label.Size = new System.Drawing.Size(27, 13);
-            this.NumberP_label.TabIndex = 19;
-            this.NumberP_label.Text = "№ =";
             // 
             // showPoints
             // 
@@ -451,17 +381,11 @@
             this.Controls.Add(this.Ymax);
             this.Controls.Add(this.Xmax);
             this.Controls.Add(this.showPoints);
-            this.Controls.Add(this.NumberP_label);
-            this.Controls.Add(this.Radius_label);
-            this.Controls.Add(this.radiusForel);
-            this.Controls.Add(this.numberForel);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.paintForel);
             this.Controls.Add(this.selectCountCrab);
             this.Controls.Add(this.countCrab);
             this.Controls.Add(this.infoOutPut);
             this.Controls.Add(this.paintCrab);
-            this.Controls.Add(this.paintDendrogram);
             this.Controls.Add(this.getListProvince);
             this.Controls.Add(this.factorY);
             this.Controls.Add(this.factorX);
@@ -486,18 +410,12 @@
         private System.Windows.Forms.ComboBox factorX;
         private System.Windows.Forms.ComboBox factorY;
         private System.Windows.Forms.Button getListProvince;
-        private System.Windows.Forms.Button paintDendrogram;
         private System.Windows.Forms.Button paintCrab;
         private System.Windows.Forms.TextBox infoOutPut;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.TextBox countCrab;
         private System.Windows.Forms.Button selectCountCrab;
-        private System.Windows.Forms.Button paintForel;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox numberForel;
-        private System.Windows.Forms.TextBox radiusForel;
-        private System.Windows.Forms.Label Radius_label;
-        private System.Windows.Forms.Label NumberP_label;
         private System.Windows.Forms.Button showPoints;
         private System.Windows.Forms.TextBox Xmax;
         private System.Windows.Forms.TextBox Ymax;
